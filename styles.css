@@ -15,7 +15,7 @@ body {
 .backdrop {
   position: fixed;
   inset: 0;
-  background: url('../img/backdrop.jpg') center/cover no-repeat; /*images/backdrop.jpg -> if images sits in another folder, badically copy file path*/
+  background: url('./backdrop.jpg') center/cover no-repeat; /*images/backdrop.jpg -> if images sits in another folder, badically copy file path*/
   background-color: #222; /* fallback while real image is added */
   z-index: -1;
 }
