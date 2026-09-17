@@ -1,0 +1,118 @@
+<!DOCTYPE html> 
+<!--This tells the browser that this is a html file-->
+
+<html lang="en"> 
+<!--Specifies language as english-->
+
+<head> <!--metadata about the page, not visible on webpage-->
+  <meta charset="UTF-8"> <!--tells the browser to interpret text as UTF-8, so special characters are displayed properly-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--tells mobile browsers to render at the phone's actual width-->
+  <title>Vivi — Home</title>
+ 
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../resources/css/styles.css"> <!--links external files-->
+</head>
+
+
+<body> 
+<!--visible on webpage-->
+<!--backdrop, header, nav, footer are mostly common across all four html files-->
+  
+  <div class="backdrop"></div> <!--<div> is a generic box used by css to identify and place backdrop-->
+
+  <div class="container-fluid page-box"> <!--the container that becomes the translucent black panel, where all content lives-->
+
+    <header class="site-header"> <!--header is a semantic tag that tells the browser, "this is the intro to the page"-->
+      <p class="site-title">Vidita Mulik — CS @ CU Boulder</p> <!--the <p> is a text para-->
+    </header>
+
+<!-- Defines the main navigation bar and enables responsive Bootstrap behavior -->
+<nav class="navbar navbar-expand-lg p-0">
+  
+  <!-- Creates the navigation toggle button used on smaller screens -->
+  <button class="navbar-toggler" type="button"
+          data-bs-toggle="collapse" data-bs-target="#navMenu"
+          aria-controls="navMenu" aria-expanded="false"
+          aria-label="Toggle navigation">
+    <!-- Displays the Bootstrap navigation toggle icon -->
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  
+  <!-- Contains the collapsible navigation menu -->
+  <div class="collapse navbar-collapse" id="navMenu">
+    <!-- Groups the navigation links into a Bootstrap navbar list -->
+    <ul class="navbar-nav">
+      <!-- Navigation link to the respective pages -->
+      <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="hobbies.html">Hobbies</a></li>
+      <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
+      <li class="nav-item"><a class="nav-link" href="resume.html">Resume</a></li>
+    </ul>
+  </div>
+
+</nav>
+
+    <main> <!-- semantic "actual content of this page"-->
+      <h1>Hello, I'm Vidita!</h1> <!--<h1> tag is the page's main heading-->
+      <section class="intro"> <!--semantic grouping of related content-->
+        <!--the <img> tag is a 'self-closing' tag-->
+        <!--src  is the file path to the image, alt text is shown if image fails to load-->
+        
+        <!-- Displays the profile image and makes it clickable to open the Bootstrap modal -->
+        <img
+          src="../resources/img/pfp2.jpg"
+          alt="Portrait picture of myself"
+          class="profile-img clickable-img"
+          data-bs-toggle="modal"
+          data-bs-target="#profileImgModal"
+          role="button"
+        >
+
+        <!-- Bootstrap Modal — clicking the photo above opens this larger version -->
+        <div class="modal fade" id="profileImgModal" tabindex="-1" aria-labelledby="profileImgModalLabel" aria-hidden="true">
+          <!-- Centers the modal vertically on the page -->
+          <div class="modal-dialog modal-dialog-centered">
+            <!-- Defines the visible modal container with a dark background -->
+            <div class="modal-content bg-dark">
+              <!-- Contains the modal title and close button -->
+              <div class="modal-header border-secondary">
+                <!-- Displays the title of the modal -->
+                <h5 class="modal-title" id="profileImgModalLabel">Vivi</h5>
+                <!-- Closes the modal when selected -->
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <!-- Contains the enlarged profile image -->
+              <div class="modal-body text-center">
+                <!-- Displays a responsive, rounded version of the profile image -->
+                <img src="../resources/img/pfp2.jpg" alt="Portrait picture of myself" class="img-fluid rounded">
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <p>
+          I'm a driven computer science student with a passion for cybersecurity and economics, on track to complete my bachelor's 
+          degree in three years. Computer Science thrives on principles that matter everywhere: efficiency, accuracy, decomposition 
+          and creativity. As the technical landscape evolves more into an interdisciplinary field, I am glad to be a part of this 
+          area where I can apply technical skills to create real impact. I'm particularly drawn to the intersection of AI and 
+          cybersecurity, and governance and economics, all of which I see as one of the most essential frontiers in the world right 
+          now.
+
+          Currently building skills and looking for opportunities that both fit neatly into one box - and don't.
+        </p>
+      </section>
+    </main>
+
+    <footer class="site-footer"> <!--semantic tag indicating this is end of page-->
+      <p>Connect with me on
+        <a href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+        <!--target = "_blank" opens the link in new tab, rel='noopener' is a security best practise to prevent the
+         new tab from getting a referenve back to the page-->
+      </p>
+    </footer>
+
+  </div> <!--end with </div> since is the box in which the content lies-->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

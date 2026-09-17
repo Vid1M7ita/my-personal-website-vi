@@ -1,0 +1,206 @@
+* { box-sizing: border-box; }
+/* Applies border-box sizing to all elements so padding 
+and borders are included in the element's total width and height */
+
+/* Element selector */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Helvetica, Arial, sans-serif; /*This is a fallback list — the browser uses the first one it has installed. To use a custom font (e.g. Google Fonts) need more steps*/
+  line-height: 1.75;
+  color: #ffffff;  /* default text color — change to any hex code */
+}
+ 
+/* ---------- Backdrop image ---------- */
+/* Fixed + full-viewport, sits BEHIND everything else (z-index: -1) */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: url('../img/backdrop.jpg') center/cover no-repeat; /*images/backdrop.jpg -> if images sits in another folder, badically copy file path*/
+  background-color: #222; /* fallback while real image is added */
+  z-index: -1;
+}
+ 
+/* ---------- The black box that holds all real content ---------- */
+/* Class selector and box-model properties (margin & padding) */
+.page-box {
+  width: 75%;max-width: 1100px;
+  margin: 3rem auto;
+  padding: 2rem 2.5rem;
+  background: rgba(0, 0, 0, 0.82); /* the black box: last number (0.82) is opacity, 0–1 */
+  border-radius: 15px;
+}
+ 
+/* ---------- Header ---------- */
+.site-header {
+  border-bottom: 1px solid rgba(255,255,255,0.25);
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.site-title {
+  margin: 0;
+  font-size: 1.1rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+ 
+/* ---------- Nav ---------- */
+.navbar-nav {
+  flex-direction: row;
+  gap: 1.5rem;
+  margin: 0 0 1.5rem 0;
+}
+.nav-link {
+  color: #fff;
+  font-weight: 600;
+  padding: 0;
+}
+.nav-link:hover,
+.nav-link:focus {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.navbar-toggler {
+  border-color: rgba(255,255,255,0.5);
+}
+
+.navbar-toggler-icon {
+  filter: invert(1); /* Bootstrap's icon is a dark SVG by default — invert for visibility on dark background */
+}
+ 
+/* ---------- Main heading ---------- */
+main h1 {
+  margin-top: 0;
+  margin-bottom: 2rem;   /* extra breathing room before the next heading */
+}
+ 
+/* ---------- Home page intro ---------- */
+.intro {
+  display: flex;
+  gap: 2.0rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.profile-img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 10px solid rgba(255,255,255,0.5);
+}
+
+.clickable-img {
+  cursor: pointer;
+}
+ 
+/* ---------- Hobbies: 2x2 "window" grid ---------- */
+.hobby-card {
+  height: 100%; /* fills the equal-height .col Bootstrap's row already creates, so borders line up across a row regardless of how much text each card reveals */
+  border: 5px solid rgba(255,255,255,0.5);
+  border-radius: 6px; 
+  overflow: hidden;
+}
+
+.col {
+  min-width: 0; /* prevents a card's revealed content from stretching it column wider than its siblings once opened */
+}
+
+.hobby-card summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 1.75rem 1rem;
+  text-align: center;
+  font-size: 1.20rem;
+  font-weight: 600;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hobby-card summary::-webkit-details-marker { display: none; }
+.hobby-card[open] summary {
+  aspect-ratio: auto;
+  background: rgba(255, 255, 255, 0.205);
+}
+.hobby-content {
+  padding: 0 1rem 1rem;
+}
+.hobby-content img {
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+ 
+/* ---------- Projects: horizontal drop-down rows ---------- */
+.project-row {
+  border: 5px solid rgba(255,255,255,0.35);
+  border-radius: 6px;
+}
+.project-row summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 1rem 1.25rem;
+  font-size: 1.20rem;
+  font-weight: 600;
+}
+.project-row summary::-webkit-details-marker { display: none; }
+.project-content {
+  padding: 0 1.25rem 1.25rem;
+}
+ 
+/* ---------- Buttons / button-styled links ---------- */
+/* Overrides Bootstrap's default .btn: Bootstrap's base .btn ships with
+   transparent background, 1px transparent border, and .375rem padding/
+   radius — this rule replaces all of that with a solid white pill. */
+.btn {
+  display: inline-block;
+  background: #fff; /* button background */
+  color: #000;      /* button text */
+  padding: 0.5rem 1.1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+.btn:hover { background: #ddd; }
+ 
+/* ---------- Resume ---------- */
+.resume-section { margin-bottom: 1.5rem; }
+.resume-section h2 {
+  font-size: 1.3rem;   /* was inheriting Bootstrap's default h2 size (2rem) */
+  border-bottom: 1px solid rgba(255,255,255,0.25);
+  padding-bottom: 0.25rem;
+}
+
+/* Overrides two Bootstrap badge defaults: bold font-weight and the
+   smaller 0.75em font-size, so badges read at normal text size
+   
+   This sidesteps needing !important entirely — since I removed the 
+   conflicting bg-secondary/bg-dark classes, there's nothing left to 
+   override, which matches the "avoid excessive !important" best practice
+*/
+.skill-badge {
+  background-color: rgba(255,255,255,0.15);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.35rem 0.75rem;
+}
+ 
+/* ---------- Footer ---------- */
+.site-footer {
+  border-top: 1px solid rgba(255,255,255,0.25);
+  margin-top: 2rem;
+  padding-top: 1rem;
+  font-size: 0.9rem;
+}
+.site-footer a { color: #fff; }
+ 
+/* ---------- Phone-width tweaks ---------- */
+@media (max-width: 480px) {
+  .page-box { margin: 0; border-radius: 0; padding: 1.25rem; }
+  .intro { flex-direction: column; text-align: center; }
+}

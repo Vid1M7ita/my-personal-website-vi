@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Plate Studies: The Ischemic Heart — An Anatomical Progression</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Source+Sans+3:wght@400;600&family=Cutive+Mono&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3EAD6;
+    --paper-2:#EAE0C8;
+    --ink:#20283F;
+    --ink-soft:#4A5170;
+    --artery:#8C231C;
+    --artery-deep:#6B1913;
+    --externa:#5B3358;
+    --intima:#7A1610;
+    --lumen:#C23B2E;
+    --plaque:#B8892B;
+    --clot:#33150F;
+    --hatch:#C9BBA0;
+    --line:#B7A67F;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    background-image:
+      radial-gradient(ellipse at top left, rgba(255,255,255,0.35), transparent 60%),
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.015) 0px, rgba(0,0,0,0.015) 1px, transparent 1px, transparent 3px);
+    color:var(--ink);
+    font-family:'Source Sans 3', sans-serif;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+  .frame{
+    width:100%;
+    max-width:880px;
+    border:1px solid var(--line);
+    outline:1px solid var(--paper);
+    outline-offset:-8px;
+    background:var(--paper-2);
+    padding:36px 40px 30px;
+    position:relative;
+  }
+  .masthead{
+    text-align:center;
+    border-bottom:2px solid var(--ink);
+    padding-bottom:14px;
+    margin-bottom:22px;
+  }
+  .eyebrow{
+    font-family:'Cutive Mono', monospace;
+    letter-spacing:0.18em;
+    font-size:11px;
+    color:var(--artery-deep);
+    text-transform:uppercase;
+  }
+  h1{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    font-size:clamp(24px,4vw,34px);
+    margin:6px 0 4px;
+    letter-spacing:0.01em;
+  }
+  .subtitle{
+    font-style:italic;
+    font-family:'Playfair Display', serif;
+    color:var(--ink-soft);
+    font-size:15px;
+  }
+  .plate-label{
+    font-family:'Cutive Mono', monospace;
+    text-align:center;
+    font-size:12px;
+    letter-spacing:0.14em;
+    color:var(--artery-deep);
+    margin-bottom:6px;
+    text-transform:uppercase;
+  }
+  .stage-title{
+    text-align:center;
+    font-family:'Playfair Display', serif;
+    font-weight:600;
+    font-size:22px;
+    margin:0 0 18px;
+  }
+  .stage-wrap{
+    display:flex;
+    gap:32px;
+    align-items:flex-start;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  .svg-box{
+    flex:0 0 300px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+  }
+  .svg-box svg{width:300px;height:300px;}
+  .svg-box.title-heart{flex:1 1 100%;}
+  .svg-box.title-heart svg{width:380px;height:auto;max-width:92%;}
+  .svg-caption{
+    text-align:center;
+    font-family:'Cutive Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.05em;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+    margin-top:10px;
+    max-width:280px;
+  }
+  .info-box{
+    font-size:14px;
+    line-height:1.55;
+    background:rgba(32,40,63,0.05);
+    border-left:3px solid var(--ink);
+    padding:10px 14px;
+    margin-bottom:14px;
+  }
+  .info-box strong{color:var(--ink);}
+  .info-box ul{margin:6px 0 0;padding-left:18px;}
+  .info-box li{margin-bottom:3px;}
+  .caption-box{
+    flex:1 1 320px;
+    min-width:260px;
+  }
+  .caption{
+    font-size:16px;
+    line-height:1.65;
+    margin:0 0 16px;
+  }
+  .risk-badges{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:10px;
+  }
+  .badge{
+    font-family:'Cutive Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.03em;
+    padding:6px 11px;
+    border:1px solid var(--artery-deep);
+    color:var(--artery-deep);
+    background:transparent;
+    cursor:pointer;
+    text-transform:uppercase;
+    transition:background .15s ease, color .15s ease;
+  }
+  .badge:hover, .badge.active{
+    background:var(--artery-deep);
+    color:var(--paper);
+  }
+  .badge-detail{
+    font-size:14px;
+    line-height:1.5;
+    background:rgba(140,35,28,0.07);
+    border-left:3px solid var(--artery-deep);
+    padding:10px 14px;
+    margin-top:6px;
+    display:none;
+  }
+  .badge-detail.show{display:block;}
+  .slider-row{
+    margin-top:10px;
+  }
+  .slider-row label{
+    font-family:'Cutive Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.06em;
+    color:var(--ink-soft);
+    display:block;
+    margin-bottom:8px;
+    text-transform:uppercase;
+  }
+  input[type=range]{
+    width:100%;
+    accent-color:var(--artery-deep);
+  }
+  .slider-readout{
+    font-family:'Cutive Mono', monospace;
+    font-size:13px;
+    color:var(--artery-deep);
+    margin-top:6px;
+  }
+  .nav-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:28px;
+    border-top:1px solid var(--line);
+    padding-top:16px;
+  }
+  .dots{
+    display:flex;
+    gap:7px;
+  }
+  .dot{
+    width:8px;height:8px;
+    border-radius:50%;
+    background:var(--hatch);
+  }
+  .dot.active{background:var(--artery-deep);}
+  button.nav{
+    font-family:'Cutive Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    background:var(--ink);
+    color:var(--paper);
+    border:none;
+    padding:11px 20px;
+    cursor:pointer;
+    transition:opacity .15s ease;
+  }
+  button.nav:disabled{opacity:0.25;cursor:default;}
+  button.nav.ghost{
+    background:transparent;
+    color:var(--ink);
+    border:1px solid var(--ink);
+  }
+  .artist-statement{
+    font-size:15px;
+    line-height:1.7;
+  }
+  .artist-statement h2{
+    font-family:'Playfair Display', serif;
+    font-size:20px;
+    margin-bottom:10px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="masthead">
+    <div class="eyebrow">Vidita Mulik's Disease Project — Cardiovascular System</div>
+    <h1>The Ischemic Heart</h1>
+    <div class="subtitle">A guided anatomical progression, from healthy vessel to acute event</div>
+  </div>
+
+  <div id="plate-label" class="plate-label"></div>
+  <div id="stage-title" class="stage-title"></div>
+
+  <div class="stage-wrap">
+    <div class="svg-box" id="svg-box"></div>
+    <div class="caption-box" id="caption-box"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav ghost" id="prevBtn">&larr; Back</button>
+    <div class="dots" id="dots"></div>
+    <button class="nav" id="nextBtn">Next &rarr;</button>
+  </div>
+</div>
+
+<script>
+const NS = "http://www.w3.org/2000/svg";
+
+function hatchRing(cx, cy, r1, r2, color, n=28){
+  // radial hatch lines between r1 and r2 to give an engraved-shading look
+  let s = "";
+  for(let i=0;i<n;i++){
+    const a = (i/n)*2*Math.PI;
+    const x1 = cx + r1*Math.cos(a), y1 = cy + r1*Math.sin(a);
+    const x2 = cx + r2*Math.cos(a), y2 = cy + r2*Math.sin(a);
+    s += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${color}" stroke-width="1" opacity="0.55"/>`;
+  }
+  return s;
+}
+
+// Shared anatomy: every artery cross-section is built from the same three
+// concentric layers (tunica externa, tunica media, tunica intima) around a
+// central lumen, matching the reference sketch. CX/CY = 170,170 to leave
+// margin for the layer-label leader lines on Plate I.
+const CX = 170, CY = 170;
+const R_EXT_OUT = 118;   // outer edge of tunica externa
+const R_EXT_IN  = 100;   // = outer edge of tunica media
+const R_MED_IN  = 76;    // = outer edge of tunica intima / lumen boundary
+const R_LUMEN   = 76;
+
+function arteryBase(withLabels=false, cx=CX, cy=CY){
+  let s = "";
+  s += `<circle cx="${cx}" cy="${cy}" r="${R_EXT_OUT}" fill="none" stroke="#3E2440" stroke-width="2.5"/>`;
+  s += hatchRing(cx, cy, R_EXT_IN, R_EXT_OUT, '#5B3358', 36);
+  s += `<circle cx="${cx}" cy="${cy}" r="${R_EXT_IN}" fill="none" stroke="#3E2440" stroke-width="1.5" opacity="0.7"/>`;
+  s += hatchRing(cx, cy, R_MED_IN, R_EXT_IN, '#8C231C', 40);
+  s += `<circle cx="${cx}" cy="${cy}" r="${R_MED_IN}" fill="#C23B2E" stroke="#7A1610" stroke-width="3"/>`;
+  if(withLabels){
+    const extR = (R_EXT_IN + R_EXT_OUT) / 2;   // midpoint of the externa band
+    const medR = (R_MED_IN + R_EXT_IN) / 2;    // midpoint of the media band
+    const intR = R_MED_IN;                     // the thin intima boundary itself
+    s += `
+      <!-- Tunica Externa: straight up from the outer band -->
+      <line x1="${cx}" y1="${(cy-extR).toFixed(1)}" x2="${cx}" y2="${cy-150}" stroke="#4A5170" stroke-width="1"/>
+      <text x="${cx}" y="${cy-158}" text-anchor="middle" font-family="Cutive Mono, monospace" font-size="11" fill="#5B3358">TUNICA EXTERNA</text>
+
+      <!-- Tunica Media: from the middle band, out to the right -->
+      <line x1="${(cx+medR*0.985).toFixed(1)}" y1="${(cy-medR*0.174).toFixed(1)}" x2="${cx+150}" y2="${(cy-15).toFixed(1)}" stroke="#4A5170" stroke-width="1"/>
+      <text x="${cx+154}" y="${cy-11}" text-anchor="start" font-family="Cutive Mono, monospace" font-size="11" fill="#8C231C">TUNICA MEDIA</text>
+
+      <!-- Tunica Intima: from the thin boundary ring itself, out to the lower left -->
+      <line x1="${(cx-intR*0.940).toFixed(1)}" y1="${(cy+intR*0.342).toFixed(1)}" x2="${cx-140}" y2="${cy+60}" stroke="#4A5170" stroke-width="1"/>
+      <text x="${cx-144}" y="${cy+64}" text-anchor="end" font-family="Cutive Mono, monospace" font-size="11" fill="#7A1610">TUNICA INTIMA</text>
+
+      <!-- Lumen: straight down from the very center -->
+      <line x1="${cx}" y1="${cy}" x2="${cx}" y2="${cy+150}" stroke="#4A5170" stroke-width="1"/>
+      <text x="${cx}" y="${cy+164}" text-anchor="middle" font-family="Cutive Mono, monospace" font-size="11" fill="#7A1610">LUMEN</text>
+    `;
+  }
+  return s;
+}
+
+function svgHealthy(){
+  return `<svg viewBox="-20 0 500 470">
+    ${arteryBase(true, 230, 230)}
+  </svg>`;
+}
+
+function svgInjury(){
+  // jagged intima/lumen boundary to depict endothelial damage
+  const pts=[];
+  for(let i=0;i<=44;i++){
+    const a = (i/44)*2*Math.PI;
+    const jitter = (i%6===0) ? -8 : (i%9===0 ? 5 : 0);
+    const r = R_LUMEN + jitter;
+    pts.push([CX+r*Math.cos(a), CY+r*Math.sin(a)]);
+  }
+  const jag = "M " + pts.map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join(" L ") + " Z";
+  return `<svg viewBox="0 0 340 340">
+    <circle cx="${CX}" cy="${CY}" r="${R_EXT_OUT}" fill="none" stroke="#3E2440" stroke-width="2.5"/>
+    ${hatchRing(CX,CY,R_EXT_IN,R_EXT_OUT,'#5B3358',36)}
+    <circle cx="${CX}" cy="${CY}" r="${R_EXT_IN}" fill="none" stroke="#3E2440" stroke-width="1.5" opacity="0.7"/>
+    ${hatchRing(CX,CY,R_MED_IN,R_EXT_IN,'#8C231C',40)}
+    <path d="${jag}" fill="#C23B2E" stroke="#7A1610" stroke-width="3" stroke-linejoin="round"/>
+  </svg>`;
+}
+
+function svgPlaque(pct){
+  // pct 0-100: plaque arc grows from the intima inward across the lumen
+  const maxDepth = R_LUMEN - 12; // leave a small residual channel even at 100%
+  const depth = (pct/100)*maxDepth;
+  const startA = -75, endA = 75; // degrees, arc on right side of lumen
+  const toRad = d => d*Math.PI/180;
+  const outerPts=[], innerPts=[];
+  const steps=26;
+  for(let i=0;i<=steps;i++){
+    const a = toRad(startA + (endA-startA)*(i/steps));
+    outerPts.push([CX+R_LUMEN*Math.cos(a), CY+R_LUMEN*Math.sin(a)]);
+  }
+  for(let i=steps;i>=0;i--){
+    const a = toRad(startA + (endA-startA)*(i/steps));
+    innerPts.push([CX+(R_LUMEN-depth)*Math.cos(a), CY+(R_LUMEN-depth)*Math.sin(a)]);
+  }
+  const all = outerPts.concat(innerPts);
+  const path = "M " + all.map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join(" L ") + " Z";
+  return `<svg viewBox="0 0 340 340">
+    ${arteryBase(false)}
+    <path d="${path}" fill="#B8892B" stroke="#6B1913" stroke-width="1.5" opacity="0.94"/>
+  </svg>`;
+}
+
+function svgRupture(){
+  // clearer rupture: a visible break in the intima boundary, a distinct
+  // fibrous cap remnant, and an irregular thrombus with texture so it reads
+  // clearly against the cream background (no on-image label — see caption below)
+  return `<svg viewBox="0 0 340 340">
+    ${arteryBase(false)}
+    <!-- residual fibrous cap / plaque shoulder -->
+    <path d="M ${CX+18},${CY-70} A ${R_LUMEN} ${R_LUMEN} 0 0 1 ${CX+66},${CY-8}
+             L ${CX+30},${CY-10} A 40 40 0 0 0 ${CX+2},${CY-52} Z"
+          fill="#B8892B" stroke="#6B1913" stroke-width="1.5"/>
+    <!-- crack through the cap -->
+    <path d="M ${CX+40},${CY-46} L ${CX+26},${CY-30} L ${CX+38},${CY-22} L ${CX+20},${CY-6}"
+          fill="none" stroke="#20283F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- thrombus occluding the lumen -->
+    <path d="M ${CX-46},${CY-30}
+             C ${CX-20},${CY-52} ${CX+22},${CY-46} ${CX+34},${CY-14}
+             C ${CX+46},${CY+18} ${CX+22},${CY+48} ${CX-10},${CY+50}
+             C ${CX-42},${CY+52} ${CX-62},${CY+18} ${CX-58},${CY-6}
+             C ${CX-56},${CY-18} ${CX-56},${CY-22} ${CX-46},${CY-30} Z"
+          fill="#33150F" stroke="#1A0A07" stroke-width="2"/>
+    <circle cx="${CX-18}" cy="${CY-8}" r="3.5" fill="#5B241C"/>
+    <circle cx="${CX+2}" cy="${CY+14}" r="3" fill="#5B241C"/>
+    <circle cx="${CX-32}" cy="${CY+16}" r="3" fill="#5B241C"/>
+    <circle cx="${CX-8}" cy="${CY-24}" r="2.5" fill="#5B241C"/>
+    <!-- thin residual channel of open lumen -->
+    <path d="M ${CX+40},${CY+6} A ${R_LUMEN-10} ${R_LUMEN-10} 0 0 1 ${CX+8},${CY+48}"
+          fill="none" stroke="#C23B2E" stroke-width="6" stroke-linecap="round" opacity="0.9"/>
+  </svg>`;
+}
+
+function svgIschemia(){
+  // anatomical (non-valentine) heart silhouette with a shaded ischemic zone;
+  // the label lives below the picture, not layered on top of it
+  return `<svg viewBox="0 0 340 340">
+    <path d="M205,70 C185,42 140,42 122,72 C104,102 104,132 118,158
+             C138,196 172,232 195,268 C224,232 260,192 278,150
+             C296,110 288,76 262,60 C238,44 216,46 205,70 Z"
+      fill="#EAE0C8" stroke="#20283F" stroke-width="2.5"/>
+    <path d="M195,268 C172,232 138,196 118,158 C107,136 105,114 111,94
+             C130,120 148,150 162,180 C176,210 187,240 195,268 Z"
+      fill="#8C231C" opacity="0.30"/>
+    <path d="M150,150 L185,150 L172,175 L200,175 L162,225 L174,185 L150,185 Z"
+      fill="#33150F" opacity="0.85"/>
+  </svg>`;
+}
+
+function svgPrevention(){
+  return `<svg viewBox="0 0 340 340">
+    ${arteryBase(false)}
+    <path d="M170,130 C186,138 202,142 202,142 C202,172 190,198 170,210 C150,198 138,172 138,142 C138,142 154,138 170,130 Z"
+      fill="none" stroke="#20283F" stroke-width="2.5"/>
+    <path d="M154,166 L166,178 L188,152" fill="none" stroke="#20283F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>`;
+}
+
+function svgTitle(){
+  return `<svg viewBox="0 0 460 420">
+    <path d="M230,380 C130,300 30,225 30,135 C30,60 95,15 165,15 C205,15 230,40 230,75
+             C230,40 255,15 295,15 C365,15 430,60 430,135 C430,225 330,300 230,380 Z"
+      fill="#F3EAD6" stroke="#8C231C" stroke-width="5"/>
+    <path d="M230,368 C138,292 42,220 42,135 C42,66 101,23 165,23 C201,23 222,45 222,75
+             L222,84 L238,84 L238,75 C238,45 259,23 295,23 C359,23 418,66 418,135 C418,220 322,292 230,368 Z"
+      fill="none" stroke="#8C231C" stroke-width="1" opacity="0.35"/>
+    <text x="230" y="128" text-anchor="middle" font-family="Cutive Mono, monospace" font-size="13" letter-spacing="2" fill="#6B1913">VIDITA MULIK</text>
+    <text x="230" y="182" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="25" fill="#20283F">Ischemic Heart</text>
+    <text x="230" y="212" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="25" fill="#20283F">Disease</text>
+    <text x="230" y="252" text-anchor="middle" font-family="Cutive Mono, monospace" font-size="10" letter-spacing="1.5" fill="#4A5170">PREPARED FOR</text>
+    <text x="230" y="276" text-anchor="middle" font-family="Playfair Display, serif" font-style="italic" font-size="16" fill="#20283F">Professor Breeana Betts</text>
+  </svg>`;
+}
+
+const stages = [
+  {
+    plate:"",
+    title:"",
+    svg: svgTitle,
+    titleSlide:true,
+    caption:null,
+    risks:null,
+    slider:false
+  },
+  {
+    plate:"Plate I",
+    title:"The Healthy Artery",
+    svg: svgHealthy,
+    caption:"A healthy coronary artery has a smooth endothelial lining and an open lumen, allowing unobstructed blood flow to the heart muscle. This single-cell-thick lining is the body's first line of defense against vascular disease.",
+    risks:null,
+    slider:false
+  },
+  {
+    plate:"Plate II",
+    title:"Endothelial Injury",
+    svg: svgInjury,
+    caption:"Chronic stress on the artery wall damages the endothelium, the protective lining that normally regulates vascular tone and blocks harmful particles.",
+    infoBlock:`<strong>When injured, the endothelium becomes dysfunctional</strong> — losing its normal ability to:
+      <ul>
+        <li>Produce nitric oxide (NO) for vasodilation</li>
+        <li>Maintain anti-inflammatory and anticoagulant properties</li>
+        <li>Act as a barrier to harmful substances</li>
+      </ul>
+      This dysfunction is what opens the door to atherosclerosis. Explore the contributing risk factors below.`,
+    risks:[
+      {label:"Hypertension", detail:"Increased blood pressure (prehypertension: 120–139/80–89 mmHg; hypertension: ≥140/90 mmHg) creates persistent shear stress on the vessel wall, physically damaging the endothelium."},
+      {label:"Smoking", detail:"Chemicals in tobacco smoke directly injure the endothelium and promote oxidative stress and inflammation. Thousands of toxic chemicals and free radicals in cigarette smoke reduce nitric oxide availability, causing arteries to stiffen and lose their ability to expand, which raises blood pressure. The damaged, sticky endothelium then attracts immune cells and platelets, accelerating plaque formation and raising the risk of heart disease, stroke, and peripheral artery disease."},
+      {label:"High LDL", detail:"Excess LDL cholesterol infiltrates the injured wall, where it becomes oxidized and triggers an inflammatory response."},
+      {label:"Diabetes", detail:"Chronic hyperglycemia damages small and large vessels alike, accelerating endothelial dysfunction."},
+      {label:"Family history", detail:"Genetic factors (e.g., lipoprotein(a), familial hypercholesterolemia) can predispose individuals to earlier vascular injury."}
+    ],
+    slider:false
+  },
+  {
+    plate:"Plate III",
+    title:"Plaque Formation",
+    svg: null,
+    caption:"This is the process of atherosclerosis — the buildup of fatty plaque within the artery wall — and it unfolds in five stages. Drag the slider to watch the plaque progress and the lumen narrow.",
+    infoBlock:`<strong>Atherosclerosis, step by step:</strong>
+      <ul>
+        <li><strong>Infiltration</strong> — excess LDL particles slip past the injured endothelium into the underlying intima.</li>
+        <li><strong>Oxidation</strong> — once trapped, the LDL particles are chemically altered by free radicals.</li>
+        <li><strong>Immune reaction</strong> — oxidized LDL triggers monocytes to enter the vessel wall and transform into macrophages.</li>
+        <li><strong>Foam cell formation</strong> — macrophages engulf the oxidized LDL until they become fat-laden foam cells.</li>
+        <li><strong>Plaque buildup</strong> — foam cells die and accumulate into a fatty core capped by scar tissue, narrowing the artery and restricting blood flow.</li>
+      </ul>`,
+    risks:null,
+    slider:true
+  },
+  {
+    plate:"Plate IV",
+    title:"Plaque Rupture & Thrombus",
+    svg: svgRupture,
+    svgCaption:"Thrombus — occluding the lumen",
+    caption:"An unstable plaque's fibrous cap can crack under mechanical or inflammatory stress. Platelets rapidly aggregate at the exposed site, and a thrombus forms — partially or fully occluding the artery. This is the acute event underlying most heart attacks.",
+    risks:null,
+    slider:false
+  },
+  {
+    plate:"Plate V",
+    title:"Ischemia & Outcome",
+    svg: svgIschemia,
+    svgCaption:"Myocardium — ischemic zone shaded",
+    caption:"Heart muscle downstream of the blockage is starved of oxygen. This produces the classic symptoms of angina — chest pain, pain radiating to the arm or jaw, shortness of breath — and, without rapid treatment (thrombolytics, PCI/stenting, or CABG), leads to irreversible tissue death (myocardial infarction).",
+    infoBlock:`<strong>Scarring: repair that comes at a cost.</strong> Dead cardiac muscle cannot regenerate. Over the following weeks, the body replaces it with fibrous scar tissue, which seals the wall but cannot contract like true myocardium. This does more harm than good in several ways: it permanently reduces the heart's contractile mass and pumping efficiency, disrupts the normal electrical conduction pathway (raising the risk of dangerous arrhythmias), and can cause the ventricle to remodel and dilate over time, progressively weakening the heart and increasing the risk of heart failure.`,
+    risks:null,
+    slider:false
+  },
+  {
+    plate:"Plate VI",
+    title:"Explore Prevention & Management",
+    svg: svgPrevention,
+    caption:"Much of the disease process shown in Plates II–IV is preventable or manageable. Explore the categories below.",
+    risks:[
+      {label:"Diet & weight", detail:"A diet low in saturated fat and sodium, rich in fiber, fruits, and vegetables, along with maintaining a healthy weight, reduces LDL and blood pressure — directly slowing the injury-to-plaque pathway."},
+      {label:"Exercise", detail:"Regular aerobic activity improves endothelial function, raises HDL, lowers blood pressure, and helps regulate blood glucose — targeting several risk factors at once."},
+      {label:"Smoking cessation", detail:"Quitting smoking rapidly reduces endothelial injury and inflammation; cardiovascular risk begins dropping within weeks of cessation."},
+      {label:"Medications", detail:"Statins lower LDL and stabilize existing plaque; antihypertensives control pressure-driven vessel stress; antiplatelets (e.g., aspirin) reduce clot risk in those already at high risk."},
+      {label:"Screening", detail:"Routine blood pressure, lipid panels, and (for higher-risk patients) coronary calcium scoring allow risk factors and early plaque to be caught before an acute event occurs."},
+      {label:"Cardiac rehab", detail:"For those already diagnosed, structured rehab programs combining supervised exercise, education, and counseling significantly lower the risk of a second event."}
+    ],
+    slider:false
+  },
+  {
+    plate:"Artist's Statement",
+    title:"On This Plate Series",
+    svg: null,
+    caption:null,
+    risks:null,
+    slider:false,
+    statement:true
+  }
+];
+
+let current = 0;
+let plaqueVal = 40;
+
+function render(){
+  const s = stages[current];
+  document.getElementById('plate-label').textContent = s.plate;
+  document.getElementById('plate-label').style.display = s.plate ? '' : 'none';
+  document.getElementById('stage-title').textContent = s.title;
+  document.getElementById('stage-title').style.display = s.title ? '' : 'none';
+
+  const svgBox = document.getElementById('svg-box');
+  const capBox = document.getElementById('caption-box');
+  svgBox.classList.remove('title-heart');
+  capBox.style.display = '';
+
+  if(s.titleSlide){
+    svgBox.style.display = 'flex';
+    svgBox.classList.add('title-heart');
+    svgBox.innerHTML = s.svg();
+    capBox.style.display = 'none';
+  } else if(s.statement){
+    svgBox.style.display = 'none';
+    capBox.innerHTML = `<div class="artist-statement">
+      <p>The theme is kept deliberately simple — the ink-and-crimson lining highlights
+      the blood vessel itself, a quiet rhetorical nod to how vital these vessels are to
+      the body. Each stage is rendered as a hand-numbered plate, in the visual language
+      of a 19th-century medical atlas, which intend to slow the viewer down at each stage,
+      the way an anatomist once had to slow down to draw what they observed, rather than
+      presenting the disease as a single static image. The interactive elements
+      (clickable risk factors, a plaque-progression slider) reflect the reality that this disease
+      develops gradually, over years, driven by specific, often modifiable factors — not
+      instantaneously. Where the earlier plates keep the vessel's structure clean and orderly,
+      the final rupture plate is deliberately messier — the crack, the thrombus, the broken
+      symmetry — symbolic of how plaque and thrombus disrupt, and quite literally "mess up,"
+      the heart's system.</p>
+    </div>`;
+  } else {
+    svgBox.style.display = 'flex';
+    let html = "";
+    if(s.svg){
+      html += s.svg();
+    } else if(current===3){
+      html += svgPlaque(plaqueVal);
+    }
+    if(s.svgCaption){
+      html += `<div class="svg-caption">${s.svgCaption}</div>`;
+    }
+    svgBox.innerHTML = html;
+
+    let capHtml = "";
+    if(s.infoBlock){
+      capHtml += `<div class="info-box">${s.infoBlock}</div>`;
+    }
+    capHtml += `<p class="caption">${s.caption}</p>`;
+    if(s.risks){
+      capHtml += `<div class="risk-badges">`;
+      s.risks.forEach((r,i)=>{
+        capHtml += `<button class="badge" data-i="${i}">${r.label}</button>`;
+      });
+      capHtml += `</div><div class="badge-detail" id="badge-detail"></div>`;
+    }
+    if(s.slider){
+      capHtml += `<div class="slider-row">
+        <label>Years of plaque progression</label>
+        <input type="range" min="0" max="100" value="${plaqueVal}" id="plaqueSlider">
+        <div class="slider-readout" id="sliderReadout"></div>
+      </div>`;
+    }
+    capBox.innerHTML = capHtml;
+
+    if(s.risks){
+      capBox.querySelectorAll('.badge').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const i = +btn.dataset.i;
+          const detailBox = document.getElementById('badge-detail');
+          const already = btn.classList.contains('active');
+          capBox.querySelectorAll('.badge').forEach(b=>b.classList.remove('active'));
+          if(already){
+            detailBox.classList.remove('show');
+          } else {
+            btn.classList.add('active');
+            detailBox.textContent = s.risks[i].detail;
+            detailBox.classList.add('show');
+          }
+        });
+      });
+    }
+    if(s.slider){
+      const slider = document.getElementById('plaqueSlider');
+      const readout = document.getElementById('sliderReadout');
+      const updateReadout = ()=>{
+        const yrs = Math.round((plaqueVal/100)*25);
+        readout.textContent = `~${yrs} years of buildup — lumen narrowed to ${Math.round(100-plaqueVal*0.55)}% patency`;
+      };
+      updateReadout();
+      slider.addEventListener('input', (e)=>{
+        plaqueVal = +e.target.value;
+        document.getElementById('svg-box').innerHTML = svgPlaque(plaqueVal);
+        updateReadout();
+      });
+    }
+  }
+
+  document.getElementById('prevBtn').disabled = current===0;
+  document.getElementById('nextBtn').textContent = current===stages.length-1 ? "Restart ↺" : "Next →";
+
+  const dots = document.getElementById('dots');
+  dots.innerHTML = "";
+  stages.forEach((_,i)=>{
+    const d = document.createElement('div');
+    d.className = 'dot' + (i===current ? ' active' : '');
+    dots.appendChild(d);
+  });
+}
+
+document.getElementById('nextBtn').addEventListener('click', ()=>{
+  if(current === stages.length-1){ current = 0; } else { current++; }
+  render();
+});
+document.getElementById('prevBtn').addEventListener('click', ()=>{
+  if(current>0){ current--; render(); }
+});
+
+render();
+</script>
+</body>
+</html>

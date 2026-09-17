@@ -1,0 +1,102 @@
+<!DOCTYPE html> 
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivi — Resume</title>
+  <link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  rel="stylesheet"/>
+<link rel="stylesheet" href="../resources/css/styles.css">
+</head>
+
+<!--
+  Bootstrap class     | Element using it               | What it does
+  navbar-expand-lg    | <nav> in header, every page     | Keeps nav items horizontal on wide screens; collapses into a hamburger-triggered menu below the "lg" breakpoint
+  row / col            | Hobby & project card wrappers  | .row groups items into a horizontal grid track; each .col is a flexible column; row-cols-* controls how many sit per row at each breakpoint
+  badge                | Skill tags, this page          | Small labeled pill for tagging a short piece of text like a skill name
+-->
+
+<body>
+
+  <div class="backdrop"></div>
+
+  <div class="container-fluid page-box">
+
+    <header class="site-header">
+      <p class="site-title">Vidita Mulik — CS @ CU Boulder</p>
+    </header>
+
+<nav class="navbar navbar-expand-lg p-0">
+  <button class="navbar-toggler" type="button"
+          data-bs-toggle="collapse" data-bs-target="#navMenu"
+          aria-controls="navMenu" aria-expanded="false"
+          aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navMenu">
+    <ul class="navbar-nav">
+      <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="hobbies.html">Hobbies</a></li>
+      <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
+      <li class="nav-item"><a class="nav-link" href="resume.html">Resume</a></li>
+    </ul>
+  </div>
+</nav>
+
+    <main>
+      <h1>Resume</h1>
+
+      <section class="resume-section">
+        <h2>Education</h2>
+        <ul>
+          <li>Accelerated three-year degree plan - B.S. Computer Science, Cybersecurity emphasis and Minor in Economics at University of Colorado Boulder (Present)</li>
+          <li>Cherry Creek High School</li>
+          
+        </ul>
+      </section>
+
+      <section class="resume-section">
+        <h2>Leadership</h2>
+        <ul>
+          <li>CU GOLD Leadership Program — Core, completed</li>
+          <li>CU GOLD Leadership Program — Advanced, completed</li>
+        </ul>
+      </section>
+
+      <section class="resume-section">
+        <h2>Activities</h2>
+        <ul>
+          <li>AI Analyst, CU AI Club — completed client-facing work on the RedJade platform and 6 week program on LLMs and AI agents (present) </li>
+          <li>CU Milana — competitive Bollywood dance team</li>
+        </ul>
+      </section>
+
+      <section class="resume-section">
+        <h2>Skills</h2>
+        <p>
+          <span class="badge skill-badge me-1 mb-1">Hindi (Advanced), Marathi(Mother Tongue), German (Beginner)</span>
+          <span class="badge skill-badge me-1 mb-1">c++, c and learning Python</span>
+          <span class="badge skill-badge me-1 mb-1">Collaboration and Interpersonal Skills</span>
+        </p>
+      </section>
+
+      <!-- Instead of plain btn 
+       <a href="Vivi_Resume_2026.pdf" class="btn">Download resume (PDF)</a> -->
+      <a href="../resources/Vidita.M_Resume_2026.pdf" class="btn" target="_blank" rel="noopener" download>Download resume (PDF)</a> 
+      <!--added "download" HTML attribute - changes browser behavior from opening the file in the browser's pdf viewer to actually triggering a save to downloads.
+      If I want the downloaded file to save under the name "" regarless of what src file is named, assign that value to download attribute-->
+    </main>
+
+    <footer class="site-footer">
+      <p>Connect with me on
+        <a href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+      </p>
+    </footer>
+
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
