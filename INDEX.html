@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lab 4 - Calendar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="./resources/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <!--Create event container, table for days?-->
+    <div class="row">
+        <div class="col-2">
+            <div class="custom-container">
+                <button class="btn btn-primary mt-3"
+                    type="button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#event_modal">
+                    Create Event
+                </button>
+            </div>
+        </div>
+        <div class="col">
+            <div class="container-md container-fluid py-4 h-100">
+                <div id="calendar" class="row h-100">
+                    <div class="col-sm m-1 bg-white rounded px-1 px-md-2" id="sunday">
+                        <div class="h6 text-center position-relative py-2 day">
+                            Sunday
+                        </div>
+                    </div>
+                    <div class="col-sm m-1 bg-white rounded px-1 px-md-2" id="monday">
+                        <div class="h6 text-center position-relative py-2 day">
+                            Monday
+                        </div>
+                    </div>
+                    <div class="col-sm m-1 bg-white rounded px-1 px-md-2" id="tuesday">
+                        <div class="h6 text-center position-relative py-2 day">
+                            Tuesday
+                        </div>
+                    </div>
+                    <div class="col-sm m-1 bg-white rounded px-1 px-md-2" id="wednesday">
+                        <div class="h6 text-center position-relative py-2 day">
+                            Wednesday
+                        </div>
+                    </div>
+                    <div class="col-sm m-1 bg-white rounded px-1 px-md-2" id="thursday">
+                        <div class="h6 text-center position-relative py-2 day">
+                            Thursday
+                        </div>
+                    </div>
+                    <div class="col-sm m-1 bg-white rounded px-1 px-md-2" id="friday">
+                        <div class="h6 text-center position-relative py-2 day">
+                            Friday
+                        </div>
+                    </div>
+                    <div class="col-sm m-1 bg-white rounded px-1 px-md-2" id="saturday">
+                        <div class="h6 text-center position-relative py-2 day">
+                            Saturday
+                        </div>
+                    </div>
+                </div>        
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Modal -->
+<div class="modal fade" id="event_modal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal header -->
+      <div class="modal-header">
+        <h5 class="modal-title">Event Description</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close">
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form id="event_form">
+          <!-- Add the required form controls here-->
+           
+        <div class="form-group">
+            <label for="event_name">Event Name</label>
+            <input type="text" id="event_name" name="event_name" required>
+        </div>   
+
+        <div class="form-group">
+            <label for="event_category">Event Category</label>
+            <select id="event_category" name="event_category" required>
+                <option value="">Select a category</option>
+                <option value="class">Class</option>
+                <option value="work">Work</option>
+                <option value="personal">Personal</option>
+                <option value="social">Social</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+
+         <div class="form-group">
+            <!-- <label for="event_weekday">Day of Event (Weekday only)</label> - not needed here -->
+            <select id="event_weekday" name="event_weekday" required>
+            <!--select containing days of the week-->
+                <option value="">Select a day</option>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+            </select>
+        </div> 
+
+         <div class="form-group">
+            <label for="event_time">Event Time</label>
+            <input type="time" id="event_time" name="event_time" required>
+        </div> 
+
+        <div class="form-group">
+            <select id="event_modality" name="event_modality" required onchange="updateLocationOptions()">
+                <option value="in-person">In-person</option>
+                <option value="remote">Remote</option>
+            </select>
+        </div> 
+
+        <!--event_modality = "in-person" → show event_location, hide event_remote_url
+            event_modality = "remote" → show event_remote_url, hide event_location-->
+
+            
+        <div class="form-group" id="location_group"> <!--containers to target, wrap each field's group with an id-->
+            <label for="event_location">Event Location</label>
+            <input type="text" id="event_location" name="event_location">
+        </div> 
+
+         <div class="form-group" id="remote_group">
+            <label for="event_remote_url">Event Link</label>
+            <input type="url" id="event_remote_url" name="event_remote_url"
+                pattern="^https?://([\w\-]+\.)+[a-zA-Z]{2,}(/.*)?$"
+                placeholder="https://zoom.us/j/123456789">
+            <!--Pattern - Regular expression - a special text string for describing a search pattern.
+            change from last version: [\w-] → [\w\-] (hyphen escaped), and the dot restored as \. (a literal dot, not "any character").-->
+        </div> 
+        
+        <div class="form-group">
+            <label for="event_attendees">Event Attendees</label>
+            <input type="text" id="event_attendees" name="event_attendees" required>
+            <!--show msg to instruct user to separate names by commas (do i need to specify no spaces?)-->
+        </div>          
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal">
+          Close
+        </button>
+
+        <button type="submit" class="btn btn-primary" form="event_form">Save Event</button>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
+    <script src="./resources/js/script.js"></script> 
+    
+  </body>
+</html>
